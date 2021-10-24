@@ -1,29 +1,6 @@
 const express = require("express");
-const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
-
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-
-const domainsFromEnv = process.env.CORS_DOMAINS || "";
-
-const whitelist = domainsFromEnv.split(",").map((item) => item.trim());
-
-console.log({ whitelist });
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-};
-app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send({ message: "Hello World!" });
